@@ -176,9 +176,10 @@
 <body>
 
   <!-- Background song -->
-  <audio id="bgm" loop hidden>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_16f28ad644.mp3?filename=romantic-piano-112199.mp3" type="audio/mp3">
-  </audio>
+    <audio id="bgm" preload="auto" playsinline>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_16f28ad644.mp3?filename=romantic-piano-112199.mp3" type="audio/mp3">
+    </audio>
+
 
   <div class="stage">
     <div id="envelope" class="envelope" role="button" aria-pressed="false" tabindex="0">
@@ -233,23 +234,36 @@
     const bgm = document.getElementById('bgm');
     let opened = false;
 
-    function openEnvelope() {
-      if(opened) return;
-      opened = true;
-      envelope.classList.add('open');
-      hint.style.opacity = 0;
-
-      if (bgm) {
+    function playMusic() {
         bgm.currentTime = 0;
-        bgm.play().catch(() => {
-          console.log("Autoplay blocked, waiting for another user interaction...");
+        bgm.play().catch(err => {
+        console.log("Still blocked, waiting for next user interaction…", err);
         });
-      }
+    }
+
+    function openEnvelope() {
+        if (opened) return;
+        opened = true;
+
+        envelope.classList.add('open');
+        hint.style.opacity = 0;
+
+        // slight delay helps mobile browsers
+        setTimeout(playMusic, 100);
     }
 
     envelope.addEventListener('click', openEnvelope);
-    envelope.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' ') openEnvelope(); });
-  </script>
+    envelope.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') openEnvelope();
+    });
+
+    // Additional mobile unlock: first ANY user interaction allows audio
+    document.addEventListener('click', () => {
+        if (!opened) return;
+        playMusic();
+    }, { once: true });
+    </script>
+
 
 </body>
 </html>
