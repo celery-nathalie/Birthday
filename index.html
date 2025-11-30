@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Happy Birthday ♥</title>
 
-  <!-- Fonts -->
+
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
@@ -13,7 +13,7 @@
       --bg:#070407;
       --card-width:900px;
       --card-height:560px;
-      --accent:#dc143c; /* crimson */
+      --accent:#dc143c;
       --accent-dark:#8b0000;
       --paper:#fafafa;
       --glass: rgba(255,255,255,0.04);
@@ -32,7 +32,7 @@
       overflow:hidden;
     }
 
-    /* Stage & envelope */
+
     .stage{
       width:100%;
       max-width:var(--card-width);
@@ -57,7 +57,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Envelope bottom (body) */
+
     .env-bottom{
       position:absolute;
       left:0;right:0;bottom:0;
@@ -72,7 +72,7 @@
       overflow:hidden;
     }
 
-    /* Flap */
+
     .env-flap{
       position:absolute;
       left:0;right:0;top:0;
@@ -94,7 +94,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.85), inset 0 -6px 14px rgba(220,20,60,0.09);
     }
 
-    /* Seal */
+
     .seal{
       position:absolute;
       left:50%;
@@ -110,7 +110,7 @@
       pointer-events:none;
     }
 
-    /* Paper inside */
+
     .paper{
       position:absolute;
       left:50%;
@@ -172,7 +172,7 @@
       z-index:12;
     }
 
-    /* Sparkles container */
+
     .sparkles{
       position:absolute;
       inset:0;
@@ -181,13 +181,13 @@
       overflow:visible;
     }
 
-    /* Envelope opened state */
+
     .envelope.open .env-flap{ transform: rotateX(180deg) translateY(-8px); }
     .envelope.open .env-bottom{ transform: translateY(8px); }
     .envelope.open .seal{ transform: translate(-50%, -14px) scale(.68) rotate(-8deg); opacity:.96; }
     .envelope.open .paper{ opacity:1; transform:translate(-50%,-58%) scale(1); z-index:11; pointer-events:auto; }
 
-    /* Soft glow when opened */
+
     .glow {
       position:absolute;
       left:50%;
@@ -203,7 +203,7 @@
     }
     .envelope.open ~ .glow, .envelope.open .glow { opacity:1; }
 
-    /* Petals */
+
     .petal {
       position:fixed;
       top:-10vh;
@@ -218,14 +218,14 @@
       filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35));
     }
 
-    /* Petal animation is set via inline styles for randomness; fallback keyframes */
+
     @keyframes fall {
       0% { transform: translateY(-10vh) rotate(0deg); opacity:0; }
       8% { opacity:1; }
       100% { transform: translateY(110vh) rotate(720deg); opacity:0.95; }
     }
 
-    /* sparkles (small twinkles) */
+
     .spark {
       position:absolute;
       width:6px;height:6px;border-radius:50%;
@@ -244,7 +244,7 @@
       100%{opacity:0; transform:scale(.2) rotate(120deg);}
     }
 
-    /* Surprise page overlay */
+
     .surprise {
       position:fixed;
       inset:0;
@@ -301,7 +301,7 @@
       cursor:pointer;
     }
 
-    /* small screens */
+
     @media (max-width:720px){
       :root{--card-height:520px;--card-width:680px;}
       .heading{font-size:36px}
@@ -314,10 +314,10 @@
 
 <body>
 
-  <!-- Background song -->
+
   <audio id="bgm" loop preload="auto" playsinline>
     <source src="happy-birthday.mp3" type="audio/mp3">
-    <!-- fallback text for browsers that don't support audio -->
+
   </audio>
 
   <div class="stage" aria-live="polite">
@@ -329,7 +329,7 @@
       </div>
 
       <div class="seal" aria-hidden="true" title="sealed with love">
-        <!-- small heart svg -->
+
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M12 20s-7.2-4.5-9.1-7.1C-0.4 8.5 4.6 5 7.4 7.7 9 9 12 12 12 12s3-3 4.6-4.3C19.4 5 24.4 8.5 21.1 12.9 19.2 15.5 12 20 12 20z" fill="#fff" opacity="0.06"/>
           <path d="M12 8.6c-1.2-2-3.9-2.1-5.4-.6-1.7 1.6-1.3 4.3 1.5 7.4 2.7 3.1 5.1 4.1 5.1 4.1s2.4-1 5.1-4.1c2.8-3.1 3.2-5.8 1.5-7.4-1.6-1.5-4.2-1.3-5.4.6L12 8.6z" fill="#fff"/>
@@ -361,15 +361,15 @@
 
     <div id="hint" class="hint">Tap to open</div>
 
-    <!-- glow -->
+
     <div class="glow" aria-hidden="true"></div>
 
-    <!-- sparkles layer -->
+
     <div class="sparkles" id="sparkles" aria-hidden="true"></div>
 
   </div>
 
-  <!-- Surprise overlay (Romantic Night theme) -->
+
   <div class="surprise" id="surprise" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="surprise-card" role="document">
       <img src="surprise-image.jpg" alt="A special moment for you" style="width:100%;max-width:600px;border-radius:12px;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,0.5);">
@@ -386,9 +386,7 @@
   </div>
 
   <script>
-    /****************************
-     * Elements
-     ****************************/
+
     const envelope = document.getElementById('envelope');
     const hint = document.getElementById('hint');
     const bgm = document.getElementById('bgm');
@@ -402,15 +400,14 @@
     let opened = false;
     let petalsLaunched = false;
 
-    // Helper to try playing audio (wrapped for browsers)
+
     function tryPlayAudio() {
       bgm.currentTime = 0;
       const p = bgm.play();
       if (p && p.catch) p.catch(()=>{/* ignore */});
     }
 
-    /* Open envelope: show paper, glow, sparkles, play music,
-       animate a short sequence of sparkles/petals. */
+
     function openEnvelope() {
       if (opened) return;
       opened = true;
@@ -419,29 +416,27 @@
       hint.style.opacity = 0;
       paper.setAttribute('aria-hidden','false');
 
-      // small delay so the flap animation starts first, then music/petals
+
       setTimeout(() => {
         tryPlayAudio();
         launchPetals(30);
         createSparkles(14);
       }, 140);
 
-      // for accessibility announce
+
       envelope.setAttribute('aria-label', 'Envelope opened. Press "Open Surprise" to continue.');
     }
 
     envelope.addEventListener('click', openEnvelope);
     envelope.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); openEnvelope(); } });
 
-    // Also allow a first-anywhere click to trigger music if autoplay blocked
+
     document.addEventListener('click', function onDocClick() {
       if (opened) tryPlayAudio();
       document.removeEventListener('click', onDocClick);
     });
 
-    /****************************
-     * Falling petals generator
-     ****************************/
+
     function launchPetals(count=20) {
       if (petalsLaunched) return;
       petalsLaunched = true;
@@ -450,48 +445,48 @@
       for (let i=0;i<count;i++){
         const petal = document.createElement('div');
         petal.className = 'petal';
-        // randomize size
+
         const size = randRange(14,40);
         petal.style.width = size + 'px';
         petal.style.height = Math.round(size * 1.15) + 'px';
-        // random initial left across viewport
+
         const startLeft = randRange(-10, vw + 10);
         petal.style.left = startLeft + 'px';
-        // random rotation & transform origin
+
         const rot = randRange(0,360);
         petal.style.transform = `rotate(${rot}deg)`;
-        // create a little notch to look like a petal by using border-radius already set in CSS
 
-        // random animation duration and delay
-        const duration = randRange(4000, 8500); // ms
+
+
+        const duration = randRange(4000, 8500); 
         const delay = randRange(0, 1400);
 
-        // animate using CSS keyframes via style property fallback
+
         petal.style.animation = `fall ${duration}ms linear ${delay}ms both`;
 
-        // also apply slight horizontal drift via CSS transitions updated by JS
+
         const drift = randRange(-80, 80);
         petal.style.setProperty('--drift', drift + 'px');
 
-        // add slight individual wiggle using CSS transform in steps by adding an inner rotation with animation
+
         const wiggle = randRange(2000, 7000);
         petal.style.willChange = 'transform, left, top';
-        // random opacity
+
         petal.style.opacity = (randRange(70, 98) / 100).toString();
 
         document.body.appendChild(petal);
 
-        // Add small random horizontal oscillation by animating left over time using requestAnimationFrame
+
         animatePetal(petal, startLeft, drift, duration + delay);
 
-        // remove after animation to keep DOM clean
+
         setTimeout(()=>{ petal.remove(); }, duration + delay + 800);
       }
     }
 
     function animatePetal(el, startLeft, drift, ttl) {
       const start = performance.now();
-      const initialTop = -100; // px (above viewport)
+      const initialTop = -100; 
       const distance = window.innerHeight + 300;
       const amplitude = randRange(20, 120);
       const frequency = randRange(800, 2600);
@@ -500,9 +495,9 @@
         const elapsed = t - start;
         if (elapsed > ttl) return;
         const progress = Math.min(1, elapsed / ttl);
-        // vertical position (px)
+
         const top = initialTop + distance * progress;
-        // horizontal oscillation
+
         const x = startLeft + drift * progress + amplitude * Math.sin((elapsed / frequency) * Math.PI * 2);
         const rotate = progress * 720 * (Math.random() > 0.5 ? 1 : -1);
         el.style.top = top + 'px';
@@ -517,9 +512,7 @@
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    /****************************
-     * Sparkles generator
-     ****************************/
+
     function createSparkles(n = 12) {
       const rect = envelope.getBoundingClientRect();
       const baseLeft = rect.left + rect.width/2;
@@ -528,37 +521,35 @@
       for (let i=0;i<n;i++){
         const s = document.createElement('div');
         s.className = 'spark';
-        // random placement around top of envelope
+
         const offsetX = randRange(-rect.width/2, rect.width/2);
         const offsetY = randRange(-rect.height/4, rect.height/3);
         s.style.left = (baseLeft + offsetX) + 'px';
         s.style.top = (baseTop + offsetY) + 'px';
-        // stagger animation slightly with negative delay
+
         s.style.animationDelay = (Math.random() * 0.8).toFixed(2) + 's';
-        // scale sparkle size
+
         const size = randRange(4,10);
         s.style.width = s.style.height = size + 'px';
         sparklesContainer.appendChild(s);
-        // remove after a while for cleanliness
+
         setTimeout(()=> s.remove(), 6000 + Math.random()*2400);
       }
     }
 
-    /****************************
-     * Surprise overlay controls
-     ****************************/
+
     openSurpriseBtn.addEventListener('click', (e) => {
-      // show surprise overlay (fade)
+
       surprise.classList.add('show');
       surprise.setAttribute('aria-hidden','false');
-      // small focus trap to the close button
+
       closeSurpriseBtn.focus();
     });
 
     closeSurpriseBtn.addEventListener('click', (e) => {
       surprise.classList.remove('show');
       surprise.setAttribute('aria-hidden','true');
-      // return focus to open surprise
+
       openSurpriseBtn.focus();
     });
 
@@ -566,7 +557,7 @@
       tryPlayAudio();
     });
 
-    // allow escape to close surprise
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && surprise.classList.contains('show')) {
         surprise.classList.remove('show');
@@ -576,22 +567,16 @@
     });
 
 
-    /****************************
-     * Small progressive flair on load
-     ****************************/
-    // subtle entry hint fade
+
     window.addEventListener('load', () => {
       setTimeout(()=> {
         hint.style.opacity = 1;
       }, 450);
-      // initial tiny sparkles in background
+
       setTimeout(()=> createSparkles(6), 800);
     });
 
-    /****************************
-     * Improve mobile UX:
-     * Unlock audio on user gesture if autoplay blocked
-     ****************************/
+
     function unlockAudioOnFirstGesture() {
       try {
         bgm.play().then(()=> {
@@ -605,12 +590,10 @@
     document.addEventListener('touchstart', unlockAudioOnFirstGesture, {passive:true});
     document.addEventListener('click', unlockAudioOnFirstGesture, {once:true});
 
-    /****************************
-     * Accessibility: allow keyboard to open envelope
-     ****************************/
-    // Envelope key handler already above; ensure focus visible styling (browser default is fine).
+
 
   </script>
 
 </body>
 </html>
+
