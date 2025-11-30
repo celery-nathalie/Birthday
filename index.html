@@ -140,13 +140,6 @@
       flex-grow:1;
     }
 
-    .doodles{
-      margin-top:16px;font-size:16px;color:#999;opacity:.9;
-      display:flex;gap:8px;
-    }
-
-    .cake{display:inline-block;}
-
     .envelope.open .env-flap{ transform: rotateX(180deg) translateY(-8px); }
     .envelope.open .env-bottom{ transform: translateY(8px); }
     .envelope.open .seal{ transform: translate(-50%, -14px) scale(.7) rotate(-8deg); opacity:.92; }
@@ -169,17 +162,15 @@
       backdrop-filter: blur(4px);
       transition:opacity .6s;
     }
-
   </style>
 </head>
 
 <body>
 
   <!-- Background song -->
-    <audio id="bgm" preload="auto" playsinline>
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_16f28ad644.mp3?filename=romantic-piano-112199.mp3" type="audio/mp3">
-    </audio>
-
+  <audio id="bgm" loop preload="auto" playsinline>
+    <source src="happy-birthday.mp3" type="audio/mp3">
+  </audio>
 
   <div class="stage">
     <div id="envelope" class="envelope" role="button" aria-pressed="false" tabindex="0">
@@ -221,7 +212,6 @@
           <em style="font-family:'Great Vibes',cursive;font-size:20px">Nathalie</em>
         </div>
 
-        
       </div>
     </div>
 
@@ -234,36 +224,33 @@
     const bgm = document.getElementById('bgm');
     let opened = false;
 
-    function playMusic() {
-        bgm.currentTime = 0;
-        bgm.play().catch(err => {
-        console.log("Still blocked, waiting for next user interaction…", err);
-        });
+    function forcePlayMusic() {
+      bgm.currentTime = 0;
+      bgm.play().catch(() => {});
     }
 
     function openEnvelope() {
-        if (opened) return;
-        opened = true;
+      if(opened) return;
+      opened = true;
+      envelope.classList.add('open');
+      hint.style.opacity = 0;
 
-        envelope.classList.add('open');
-        hint.style.opacity = 0;
-
-        // slight delay helps mobile browsers
-        setTimeout(playMusic, 100);
+      // Play music with a slight delay for iPhone compatibility
+      setTimeout(() => {
+        forcePlayMusic();
+      }, 150);
     }
 
     envelope.addEventListener('click', openEnvelope);
-    envelope.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') openEnvelope();
+    envelope.addEventListener('keydown', (e)=>{ 
+      if(e.key==='Enter'||e.key===' ') openEnvelope(); 
     });
 
-    // Additional mobile unlock: first ANY user interaction allows audio
-    document.addEventListener('click', () => {
-        if (!opened) return;
-        playMusic();
+    // Allow music on second click if autoplay was blocked
+    document.addEventListener("click", () => {
+      if (opened) forcePlayMusic();
     }, { once: true });
-    </script>
-
+  </script>
 
 </body>
 </html>
